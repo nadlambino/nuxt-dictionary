@@ -1,0 +1,97 @@
+html , * {
+    @apply text-base text-gray-400 outline-0 bg-transparent text-base;
+    font-family: "Segoe UI", serif;
+}
+
+body {
+    @apply bg-[#0b2032] px-5 p-0;
+}
+
+.container {
+    @apply w-auto md:mx-20 lg:mx-60;
+}
+
+header {
+    @apply flex items-center py-5;
+
+    .app-text {
+        @apply font-bold uppercase text-gray-600;
+
+        .app-text__dictionary {
+            @apply text-[#d63b37]
+        }
+    }
+}
+
+.search-container {
+    @apply mt-10 border-[#d63b37] border-2 rounded;
+
+    form {
+        @apply flex justify-center align-middle items-center;
+
+        .search-bar {
+            @apply w-full py-2 px-4;
+        }
+
+        .search-btn {
+            @apply text-center py-2 px-4 text-white;
+
+            i {
+                @apply text-[#d63b37];
+            }
+        }
+    }
+}
+
+.result-container {
+    @apply mt-5;
+
+    .result-header {
+        .search-word-container {
+            @apply flex justify-between align-baseline;
+
+            .audio-container {
+                @apply flex gap-x-4;
+            }
+        }
+        .search-word {
+            @apply text-3xl font-bold;
+        }
+
+        .search-phonetics {
+            @apply text-lg;
+        }
+
+        .audio-play-btn {
+            @apply uppercase;
+        }
+    }
+
+    .meanings-container {
+        .meaning-container {
+            @apply py-5 border-b-[1px] border-[#15334c];
+
+            .part-of-speech {
+                @apply text-[#d63b37] italic mb-2;
+            }
+
+            ul {
+                @apply list-disc ml-5;
+            }
+            .definitions {
+                .example {
+                    @apply my-1 mb-5 italic;
+
+                    span {
+                        @apply not-italic font-bold;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.active, .active i {
+    @apply text-[#d63b37];
+}
