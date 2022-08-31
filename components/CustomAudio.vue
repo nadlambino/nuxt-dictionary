@@ -25,7 +25,6 @@ export default {
             const audioFile = this.source.split('/').pop();
             const fileName = audioFile.split('.')[0] || null;
             return _.isNil(fileName) ? '' : fileName.split('-').pop();
-
         }
     },
     methods: {

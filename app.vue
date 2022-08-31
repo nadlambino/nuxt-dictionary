@@ -33,20 +33,20 @@
                     <ul>
                         <li class="definitions" v-for="definition in meaning.definitions">
                             <span>{{ definition.definition }}</span>
-                            <div class="synonyms" v-for="synonym in definition.synonyms">
-                                <p class="text">Synonym</p>
-                                <p>{{ synonym }}</p>
+                            <div class="example" v-if="definition.example">
+                                <p class="main-text">Example:</p>
+                                <p class="sub-text">{{ definition.example }}</p>
                             </div>
-                            <div class="antonyms" v-for="antonym in definition.antonyms">
-                                <p class="text">Antonym</p>
-                                <p>{{ antonym }}</p>
-                            </div>
-                            <p class="example" v-if="definition.example">
-                                <span>Example:</span>
-                                {{ definition.example }}
-                            </p>
                         </li>
                     </ul>
+                    <div class="synonyms" v-if="meaning.synonyms.length > 0">
+                        <p class="main-text">{{ pluralize('Synonym', meaning.synonyms) }}</p>
+                        <p class="sub-text">{{ meaning.synonyms.join(', ') }}</p>
+                    </div>
+                    <div class="antonyms" v-if="meaning.antonyms.length > 0">
+                        <p class="main-text">{{ pluralize('Antonym', meaning.antonyms) }}</p>
+                        <p class="sub-text">{{ meaning.antonyms.join(', ') }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,15 +71,20 @@ export default defineComponent({
 
         const search = () => {
             results.value = [];
-            const dictionary = useDictionary(word.value).then(response => {
+            useDictionary(word.value).then(response => {
                 results.value = response;
             });
+        }
+
+        const pluralize = (word, data) => {
+            return data.length > 1 ? word + 's' : word;
         }
 
         return {
             word,
             results,
-            search
+            search,
+            pluralize
         }
     }
 });
