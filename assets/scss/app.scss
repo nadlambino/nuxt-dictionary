@@ -48,22 +48,23 @@ header {
 
     .result-header {
         .search-word-container {
-            @apply flex justify-between align-baseline;
+            @apply flex justify-between align-baseline gap-x-8;
 
             .audio-container {
                 @apply flex gap-x-4;
             }
-        }
-        .search-word {
-            @apply text-3xl font-bold;
-        }
 
-        .search-phonetics {
-            @apply text-lg;
-        }
+            .search-word {
+                @apply text-3xl font-bold text-ellipsis overflow-hidden;
+            }
 
-        .audio-play-btn {
-            @apply uppercase;
+            .search-phonetics {
+                @apply text-lg;
+            }
+
+            .audio-play-btn {
+                @apply uppercase;
+            }
         }
     }
 
@@ -72,25 +73,31 @@ header {
             @apply py-5 border-b-[1px] border-[#15334c];
 
             .part-of-speech {
-                @apply text-[#d63b37] italic mb-2;
+                @apply text-[#d63b37] font-bold italic mb-2;
             }
 
             ul {
                 @apply list-disc ml-5;
             }
-            .definitions {
-                .example {
-                    @apply my-1 mb-5 italic;
 
-                    span {
-                        @apply not-italic font-bold;
-                    }
-                }
+            .definitions {
+                @apply mt-5;
+            }
+
+            .main-text {
+                @apply font-bold text-[#d63b37];
+            }
+
+            .sub-text {
+                @apply italic;
+            }
+
+            .example, .synonyms, .antonyms {
+                @apply mt-2;
             }
         }
     }
 }
-
 
 .active, .active i {
     @apply text-[#d63b37];
