@@ -21,7 +21,7 @@ const props = defineProps({
     @apply w-full flex flex-col;
 
     h1 {
-        @apply text-red text-lg uppercase font-semibold;
+        @apply text-red text-lg uppercase font-extrabold;
     }
 }
 </style>

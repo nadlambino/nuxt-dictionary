@@ -17,7 +17,7 @@ import WordOfTheDay from './components/WordOfTheDay.vue';
 
 <style scoped lang="scss">
 .wrapper {
-    @apply flex flex-col gap-5 mt-10 relative;
+    @apply flex flex-col gap-10 mt-10 relative;
 
     @apply lg:flex-row;
 
