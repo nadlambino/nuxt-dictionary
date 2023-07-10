@@ -17,14 +17,20 @@ import WordOfTheDay from './components/WordOfTheDay.vue';
 
 <style scoped lang="scss">
 .wrapper {
-    @apply flex gap-5 mt-10 relative;
+    @apply flex flex-col gap-10 mt-10 relative;
+
+    @apply lg:flex-row;
 
     .main-content {
-        @apply w-3/5
+        @apply w-full;
+        
+        @apply lg:w-3/5
     }
 
     .side-content {
-        @apply w-2/5;
+        @apply w-full;
+        
+        @apply lg:w-2/5;
     }
 }
 </style>
