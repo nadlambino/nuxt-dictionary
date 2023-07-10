@@ -1,14 +1,10 @@
 html , * {
-    @apply text-base text-gray-400 outline-0 bg-transparent text-base;
+    @apply text-base text-gray-400 outline-0 bg-transparent;
     font-family: "Segoe UI", serif;
 }
 
 body {
     @apply bg-[#0b2032] px-5 p-0;
-}
-
-.container {
-    @apply w-auto md:mx-20 lg:mx-60;
 }
 
 header {
@@ -24,7 +20,7 @@ header {
 }
 
 .search-container {
-    @apply mt-10 border-[#d63b37] border-2 rounded;
+    @apply border-[#d63b37] border-2 rounded;
 
     form {
         @apply flex justify-center align-middle items-center;

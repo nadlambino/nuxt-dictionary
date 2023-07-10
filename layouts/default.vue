@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <header>
             <img src="/public/app-logo.png" alt="logo" class="logo" />
             <span class="app-text">
