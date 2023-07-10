@@ -1,7 +1,6 @@
 <template>
     <VContainer label="Word of the day">
         <div class="container">
-            <h1 class="word">{{ wordOfTheDay }}</h1>
             <div class="results">
                 <div class="result-container" v-for="result in results">
                     <div class="result-header">
@@ -87,7 +86,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .word {
-    @apply text-2xl capitalize font-semibold pb-5;
+    @apply text-2xl capitalize font-semibold;
 }
 
 </style>

@@ -18,7 +18,7 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .container {
-    @apply w-full flex flex-col gap-5;
+    @apply w-full flex flex-col;
 
     h1 {
         @apply text-red text-lg uppercase font-semibold;
