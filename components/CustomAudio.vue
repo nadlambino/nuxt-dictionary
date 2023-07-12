@@ -17,14 +17,21 @@ export default {
     data() {
         return {
             isActive: false,
-            duration: 0
+            duration: 0,
+            locales: ['au', 'us', 'uk']
         }
     },
     computed: {
         audioLocale() {
             const audioFile = this.source.split('/').pop();
             const fileName = audioFile.split('.')[0] || null;
-            return _.isNil(fileName) ? '' : fileName.split('-').pop();
+            const locale = fileName.split('-').pop() || ''
+
+            if (this.locales.includes(locale.toLowerCase()) && !_.isNil(fileName)) {
+                return locale;
+            }
+
+            return null;
         }
     },
     methods: {
