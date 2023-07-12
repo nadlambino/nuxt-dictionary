@@ -4,51 +4,40 @@
             <form @submit.prevent="search" class="block w-full">
                 <input
                     v-model="word"
+                    ref="searchElement"
                     type="text"
                     class="search-bar"
-                    placeholder="Search anything..."
+                    autofocus
                 />
                 <button class="search-btn" @click="search">
                     <i class="fa fa-search"></i>
                 </button>
             </form>
         </div>
-        <DictionaryBody :results="results" />
+        <h1 v-show="!results.length" class="text-center text-4xl font-bold mt-5">Search anything...</h1>
+        <DictionaryBody v-show="results.length" :results="results" />
     </div>
 </template>
 
-<script>
-import { defineComponent } from "@vue/composition-api";
+<script setup>
 import _ from 'lodash';
 import DictionaryBody from "./DictionaryBody.vue";
 
-export default defineComponent({
-    components: { DictionaryBody },
-    setup() {
-        const word = ref('');
-        const results = ref([]);
+const word = ref('');
+const results = ref([]);
+const searchElement = ref(null)
 
-        watch(word, (newWord) => {
-            results.value = _.isEmpty(newWord) || _.isNil(newWord) ? [] : results.value;
-        })
+watch(word, (newWord) => {
+    results.value = _.isEmpty(newWord) || _.isNil(newWord) ? [] : results.value;
+})
 
-        const search = () => {
-            results.value = [];
-            useDictionary(word.value).then(response => {
-                results.value = response;
-            });
-        }
+const search = () => {
+    results.value = [];
+    useDictionary(word.value).then(response => {
+        results.value = response;
+    });
+}
 
-        const pluralize = (word, data) => {
-            return data.length > 1 ? word + 's' : word;
-        }
+onMounted(() => searchElement.value.focus())
 
-        return {
-            word,
-            results,
-            search,
-            pluralize
-        }
-    }
-});
 </script>
