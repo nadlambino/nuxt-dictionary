@@ -7,6 +7,7 @@
                     ref="searchElement"
                     type="text"
                     class="search-bar"
+                    autofocus
                 />
                 <button class="search-btn" @click="search">
                     <i class="fa fa-search"></i>
