@@ -50,7 +50,7 @@ export default defineComponent({
 
 <style scoped>
 .container {
-    @apply max-w-screen-lg m-auto;
+    @apply max-w-screen-lg m-auto pb-5;
 }
 
 header {

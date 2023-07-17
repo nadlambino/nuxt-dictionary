@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Spelling Bee",
+        "desc": "Listen to the audio, and try to spell the word",
+        "url": "/games/spelling-bee",
+        "image": null,
+        "active": true
+    },
+    {
+        "name": "Guess the word",
+        "desc": "Read the word's meaning and try to guess the word",
+        "url": "/games/guess-the-word",
+        "image": null,
+        "active": true
+    }
+]
