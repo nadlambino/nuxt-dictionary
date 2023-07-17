@@ -15,6 +15,7 @@ const totalCorrectAnswer = ref(0)
 const answerInput = ref(null)
 const maxLevel = 5
 const apiTries = ref(0)
+const audioElement = ref(null)
 
 const phonetics = computed(() => {
     return result.value.map(r => {
@@ -59,6 +60,11 @@ const submit = () => {
         return
     }
 
+    if (!preAnswer.value) {
+        playAudio();
+        return;
+    }
+
     answer.value = preAnswer.value
     if (answer.value === word.value) {
         score.value += word.value.length
@@ -70,6 +76,13 @@ const submit = () => {
         }
     } else {
         tries.value -= 1;
+        playAudio()
+    }
+}
+
+const playAudio = () => {
+    if (audioElement.value) {
+        audioElement.value[0].$refs.audio.click()
     }
 }
 
@@ -122,7 +135,13 @@ watch(tries, () => {
                             <span class="word" v-else-if="isCorrect">{{ word }}</span>
                             <span v-else :class="{error: answer && !isCorrect}">. . .</span>
                         </h1>
-                        <CustomAudio v-for="(phonetic, i) in phonetics" :key="i" :source="phonetic.audio" @on-play-completed="answerInput?.focus()" />
+                        <CustomAudio 
+                            v-for="(phonetic, i) in phonetics" 
+                            :key="i" :source="phonetic.audio" 
+                            @on-play-completed="answerInput?.focus()"
+                            :autoplay="i === 0"
+                            ref="audioElement"
+                        />
                     </div>
                 </div>
                 <button class="new-btn" @click="generateWord">SKIP</button>

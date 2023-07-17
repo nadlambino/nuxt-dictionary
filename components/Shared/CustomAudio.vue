@@ -13,6 +13,10 @@ export default {
     props: {
         source: {
             required: true
+        },
+        autoplay: {
+            type: Boolean,
+            default: () => false
         }
     },
     data() {
@@ -58,6 +62,9 @@ export default {
 
     mounted() {
         this.getAudioDuration();
+        if (this.autoplay) {
+            this.$refs.audio?.click();
+        }
     }
 }
 </script>
