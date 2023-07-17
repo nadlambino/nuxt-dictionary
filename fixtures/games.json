@@ -11,6 +11,6 @@
         "desc": "Read the word's meaning and try to guess the word",
         "url": "/games/guess-the-word",
         "image": null,
-        "active": true
+        "active": false
     }
 ]

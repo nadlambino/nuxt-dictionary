@@ -1,22 +1,24 @@
 <template>
-    <div class="container">
-        <header>
-            <div class="flex items-center logo-container">
-                <img :src="favicon" alt="logo" class="logo" />
-                <span class="app-text">
-                    <span class="app-text__free">Free </span>
-                    <span class="app-text__dictionary">Dictionary</span>
-                </span>
-            </div>
-            <nav>
-                <ul>
-                    <li><NuxtLink to="/">Home</NuxtLink></li>
-                    <li><NuxtLink to="/games">Games</NuxtLink></li>
-                </ul>
-            </nav>
-    	</header>
-		<slot/>
-	</div>
+    <div class="wrapper">
+        <div class="container">
+            <header>
+                <div class="flex items-center logo-container">
+                    <img :src="favicon" alt="logo" class="logo" />
+                    <span class="app-text">
+                        <span class="app-text__free">Free </span>
+                        <span class="app-text__dictionary">Dictionary</span>
+                    </span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><NuxtLink to="/">Home</NuxtLink></li>
+                        <li><NuxtLink to="/games">Games</NuxtLink></li>
+                    </ul>
+                </nav>
+            </header>
+            <slot/>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -49,6 +51,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.wrapper {
+    @apply flex justify-center;
+}
 .container {
     @apply max-w-screen-lg m-auto pb-5;
 }
