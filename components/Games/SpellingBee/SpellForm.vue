@@ -56,7 +56,9 @@ const submit = () => {
 }
 
 watch(word, () => {
-    useDictionary(word.value).then(data => result.value = data)
+    useDictionary(word.value)
+        .then(data => result.value = data)
+        .catch(generateWord)
 }, { immediate: true })
 
 watch(phonetics, () => {
