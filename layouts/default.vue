@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="container">
         <header>
-            <div class="flex items-center">
+            <div class="flex items-center logo-container">
                 <img :src="favicon" alt="logo" class="logo" />
                 <span class="app-text">
                     <span class="app-text__free">Free </span>
@@ -48,9 +48,19 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
+.container {
+    @apply max-w-screen-lg m-auto;
+}
+
 header {
-    @apply flex justify-between;
+    @apply flex justify-between items-start flex-col gap-5;
+
+    @apply lg:flex-row lg:items-center;
+}
+
+.logo-container {
+    @apply relative -left-2;
 }
 
 nav ul {
