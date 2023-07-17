@@ -1,11 +1,19 @@
 <template>
     <div>
         <header>
-            <img :src="favicon" alt="logo" class="logo" />
-            <span class="app-text">
-                <span class="app-text__free">Free </span>
-                <span class="app-text__dictionary">Dictionary</span>
-            </span>
+            <div class="flex items-center">
+                <img :src="favicon" alt="logo" class="logo" />
+                <span class="app-text">
+                    <span class="app-text__free">Free </span>
+                    <span class="app-text__dictionary">Dictionary</span>
+                </span>
+            </div>
+            <nav>
+                <ul>
+                    <li><NuxtLink to="/">Home</NuxtLink></li>
+                    <li><NuxtLink to="/games">Games</NuxtLink></li>
+                </ul>
+            </nav>
     	</header>
 		<slot/>
 	</div>
@@ -39,3 +47,13 @@ export default defineComponent({
     }
 });
 </script>
+
+<style>
+header {
+    @apply flex justify-between;
+}
+
+nav ul {
+    @apply flex gap-5;
+}
+</style>
