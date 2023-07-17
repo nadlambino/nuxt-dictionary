@@ -22,7 +22,7 @@
 
 <script setup>
 import _ from 'lodash';
-import DictionaryBody from "./DictionaryBody.vue";
+import DictionaryBody from "./../Shared/DictionaryBody.vue";
 
 const word = ref('');
 const results = ref([]);

@@ -41,7 +41,8 @@
 </template>
 
 <script setup>
-import { usePluralize } from './../composables/pluralize'
+import { usePluralize } from './../../composables/pluralize'
+import CustomAudio from './CustomAudio.vue'
 
 const props = defineProps({
     results: Array

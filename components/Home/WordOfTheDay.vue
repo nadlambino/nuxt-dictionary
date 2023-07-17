@@ -1,16 +1,18 @@
 <template>
-    <VContainer label="Word of the day">
+    <Container label="Word of the day">
         <div class="container">
             <DictionaryBody :results="results" />
         </div>
-    </VContainer>
+    </Container>
 </template>
 
 <script setup>
 import { generate } from "random-words";
-import { useCookie } from "./../composables/cookie";
+import { useCookie } from "./../../composables/cookie";
 import { useStorage } from '@vueuse/core'
 import moment from 'moment'
+import Container from "../Shared/Container.vue";
+import DictionaryBody from "../Shared/DictionaryBody.vue";
 
 const wordOfTheDay = ref(null)
 const results = ref([])

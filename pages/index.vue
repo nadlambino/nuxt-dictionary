@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <VDictionary class="main-content" />
+        <Dictionary class="main-content" />
         <div class="side-content">
             <WordOfTheDay class="" />
         </div>
@@ -9,8 +9,8 @@
 
 <script setup>
 import './../assets/scss/app.scss';
-import VDictionary from './../components/VDictionary.vue';
-import WordOfTheDay from './../components/WordOfTheDay.vue';
+import Dictionary from './../components/Home/Dictionary.vue';
+import WordOfTheDay from './../components/Home/WordOfTheDay.vue';
 </script>
 
 <style scoped lang="scss">
