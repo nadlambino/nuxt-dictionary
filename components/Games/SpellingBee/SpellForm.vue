@@ -2,8 +2,8 @@
 import { generate } from "random-words";
 import CustomAudio from './../../Shared/CustomAudio'
 
-const min = ref(3)
-const max = ref()
+const min = ref(2)
+const max = ref(3)
 const word = ref(generate({minLength: min.value, maxLength: max.value}))
 const result = ref([])
 const answer = ref(null)
@@ -13,6 +13,7 @@ const preAnswer = ref(null)
 const score = ref(0)
 const totalCorrectAnswer = ref(0)
 const answerInput = ref(null)
+const maxLevel = 5
 
 const phonetics = computed(() => {
     return result.value.map(r => {
@@ -28,11 +29,27 @@ const generateWord = () => {
     word.value = generate({minLength: min.value, maxLength: max.value});
 }
 
+const computeMin = () => {
+    min.value = max.value + 1
+}
+
+const computeMax = () => {
+    if (level.value === maxLevel) {
+        max.value = undefined
+    } else {
+        max.value = max.value + 2
+    }
+}
+
 const isCorrect = computed(() => {
     return word.value?.trim().toLowerCase() === answer.value?.trim().toLowerCase();
 })
 
 const level = computed(() => {
+    if (level.value === 5) {
+        return maxLevel
+    }
+
     return Math.floor((totalCorrectAnswer.value / 10)) + 1
 })
 
@@ -65,6 +82,11 @@ watch(phonetics, () => {
     if (phonetics.value?.length === 0) {
         generateWord();
     }
+})
+
+watch(level, () => {
+    computeMin()
+    computeMax()
 })
 
 </script>
@@ -107,6 +129,8 @@ watch(phonetics, () => {
             <h1 class="score">Score: {{ score }}</h1>
             <h1 class="score">Level: {{ level }}</h1>
             <h1 class="score">Total Correct Answers: {{ totalCorrectAnswer }}</h1>
+            <h1 class="score">Min word: {{ min }}</h1>
+            <h1 class="score">Max word: {{ max }}</h1>
         </div>
     </div>
 </template>

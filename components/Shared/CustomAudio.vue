@@ -37,7 +37,7 @@ export default {
     methods: {
         playAudio() {
             const audio = new Audio(this.source);
-            audio.volume = 0.5;
+            audio.volume = 0.6;
             this.isActive = true;
             audio.load();
             audio.play();
