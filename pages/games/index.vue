@@ -27,7 +27,11 @@ const filteredGames = computed(() => games.filter(g => g.active))
 
 <style scoped>
 .container {
-    @apply grid grid-cols-3 gap-5
+    @apply grid grid-cols-1 gap-5;
+
+    @apply md:grid-cols-2;
+
+    @apply lg:grid-cols-3;
 }
 
 .game-container { 
