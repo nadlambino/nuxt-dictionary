@@ -9,6 +9,7 @@
 import _ from "lodash";
 
 export default {
+    emits: ['onPlayCompleted'],
     props: {
         source: {
             required: true
@@ -43,6 +44,7 @@ export default {
             audio.play();
             _.delay(() => {
                 this.isActive = false;
+                this.$emit('onPlayCompleted')
             }, this.duration);
         },
 

@@ -14,6 +14,7 @@ const score = ref(0)
 const totalCorrectAnswer = ref(0)
 const answerInput = ref(null)
 const maxLevel = 5
+const apiTries = ref(0)
 
 const phonetics = computed(() => {
     return result.value.map(r => {
@@ -73,9 +74,18 @@ const submit = () => {
 }
 
 watch(word, () => {
+    if (apiTries.value >= 3) {
+        return
+    }
     useDictionary(word.value)
-        .then(data => result.value = data)
-        .catch(generateWord)
+        .then(data => {
+            result.value = data
+            apiTries.value = 0;
+        })
+        .catch(() => {
+            generateWord()
+            apiTries.value += 1
+        })
 }, { immediate: true })
 
 watch(phonetics, () => {
@@ -89,6 +99,13 @@ watch(level, () => {
     computeMax()
 })
 
+watch(tries, () => {
+    if (tries.value <= 0) {
+        clearTimeout(timeout.value)
+        timeout.value = setTimeout(generateWord, 1000)
+    }
+})
+
 </script>
 
 <template>
@@ -96,7 +113,8 @@ watch(level, () => {
         <div class="form-container">
             <div class="question-container">
                 <div class="word-container">
-                    <div v-if="result.length === 0 || phonetics?.length === 0">Generating a word . . .</div>
+                    <div v-if="apiTries >= 3">Server is busy. Please try again later.</div>
+                    <div v-else-if="result.length === 0 || phonetics?.length === 0">Generating a word . . .</div>
                     <div v-else>
                         <h1>
                             Spell the word
@@ -104,7 +122,7 @@ watch(level, () => {
                             <span class="word" v-else-if="isCorrect">{{ word }}</span>
                             <span v-else :class="{error: answer && !isCorrect}">. . .</span>
                         </h1>
-                        <CustomAudio v-for="(phonetic, i) in phonetics" :key="i" :source="phonetic.audio" />
+                        <CustomAudio v-for="(phonetic, i) in phonetics" :key="i" :source="phonetic.audio" @on-play-completed="answerInput?.focus()" />
                     </div>
                 </div>
                 <button class="new-btn" @click="generateWord">SKIP</button>
