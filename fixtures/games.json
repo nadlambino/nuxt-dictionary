@@ -12,5 +12,12 @@
         "url": "/games/guess-the-word",
         "image": null,
         "active": false
+    },
+    {
+        "name": "Shuffle",
+        "desc": "Get the correct word from shuffled letters by reading its meaning",
+        "url": "/games/shuffle",
+        "image": null,
+        "active": false
     }
 ]

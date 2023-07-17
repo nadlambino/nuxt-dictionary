@@ -2,10 +2,14 @@
 import { generate } from "random-words";
 import CustomAudio from './../../Shared/CustomAudio'
 
-const word = ref('neighbor')
+const min = ref(3)
+const max = ref()
+const word = ref(generate({minLength: min.value, maxLength: max.value}))
 const result = ref([])
 const answer = ref(null)
 const timeout = ref()
+const tries = ref(3)
+const preAnswer = ref(null)
 
 const phonetics = computed(() => {
     return result.value.map(r => {
@@ -14,17 +18,30 @@ const phonetics = computed(() => {
 })
 
 const generateWord = () => {
-    clearTimeout(timeout.value)
-    timeout.value = setTimeout(() => {
-        answer.value = null
-        result.value = [];
-        word.value = generate();
-    }, 5000)
+    tries.value = 3
+    preAnswer.value = null
+    answer.value = null
+    result.value = [];
+    word.value = generate({minLength: min.value, maxLength: max.value});
 }
 
 const isCorrect = computed(() => {
     return word.value?.trim().toLowerCase() === answer.value?.trim().toLowerCase();
 })
+
+const submit = () => {
+    if (tries.value <= 0 || isCorrect.value || !word.value || result.value.length === 0 || phonetics.value?.length === 0) {
+        return
+    }
+
+    answer.value = preAnswer.value
+    if (answer.value === word.value) {
+        clearTimeout(timeout.value)
+        timeout.value = setTimeout(generateWord, 3000)
+    } else {
+        tries.value -= 1;
+    }
+}
 
 watch(word, () => {
     useDictionary(word.value).then(data => result.value = data)
@@ -36,39 +53,39 @@ watch(phonetics, () => {
     }
 })
 
-watch(answer, () => {
-    if (answer.value === word.value) {
-        generateWord()
-    }
-})
-
 </script>
 
 <template>
     <div class="form-container">
         <div class="question-container">
             <div class="word-container">
-                <div v-show="result.length === 0">Generating a word . . .</div>
-                <div v-show="result.length > 0">
+                <div v-if="result.length === 0 || phonetics?.length === 0">Generating a word . . .</div>
+                <div v-else>
                     <h1>
                         Spell the word
-                        <span class="word" v-if="isCorrect">{{ word }}</span>
+                        <span class="word error" v-if="tries <= 0">{{ word }}</span>
+                        <span class="word" v-else-if="isCorrect">{{ word }}</span>
                         <span v-else :class="{error: answer && !isCorrect}">. . .</span>
                     </h1>
                     <CustomAudio v-for="(phonetic, i) in phonetics" :key="i" :source="phonetic.audio" />
                 </div>
             </div>
-            <button class="new-btn" @click="generateWord">New Word</button>
+            <button class="new-btn" @click="generateWord">SKIP</button>
         </div>
         <div class="answer-container">
-            <label>Your answer</label>
-            <input
-                v-model.trim="answer"
-                type="text"
-                autofocus
-                class="answer-textbox"
-                :disabled="isCorrect"
-            />
+            <label>Tries Left: <span class="tries" :class="{danger: tries <= 0, warning: tries === 1}">{{ tries }}</span></label>
+            <div class="answer">
+                <form @submit.prevent="submit">
+                    <input
+                        v-model.trim="preAnswer"
+                        type="text"
+                        autofocus
+                        class="answer-textbox"
+                        :disabled="isCorrect || tries <= 0"
+                    />
+                    <button class="answer-btn" :disabled="isCorrect || tries <= 0">SUBMIT</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -114,7 +131,23 @@ watch(answer, () => {
     @apply flex flex-col gap-2
 }
 
-.answer {
+.answer-container label {
+    @apply uppercase font-semibold
+}
+
+.tries {
+    @apply text-[#0c6];
+}
+
+.warning {
+    @apply text-orange-500;
+}
+
+.danger {
+    @apply text-red;
+}
+
+.answer form {
     @apply flex;
 }
 
@@ -127,6 +160,6 @@ watch(answer, () => {
 }
 
 .error {
-    @apply text-red
+    @apply !text-red
 }
 </style>
