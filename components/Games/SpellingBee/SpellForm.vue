@@ -144,11 +144,26 @@ watch(tries, () => {
             </div>
         </div>
         <div class="info-container">
-            <h1 class="score">Score: {{ score }}</h1>
-            <h1 class="score">Level: {{ level }}</h1>
-            <h1 class="score">Total Correct Answers: {{ totalCorrectAnswer }}</h1>
-            <h1 class="score">Min word: {{ min }}</h1>
-            <h1 class="score">Max word: {{ max }}</h1>
+            <div class="row">
+                <h1 class="info-label">Level:</h1>
+                <h1 class="info-value">{{ level }}</h1>
+            </div>
+            <div class="row">
+                <h1 class="info-label">Min characters:</h1>
+                <h1 class="info-value">{{ min }}</h1>
+            </div>
+            <div class="row">
+                <h1 class="info-label">Max characters:</h1>
+                <h1 class="info-value">{{ max }}</h1>
+            </div>
+            <div class="row">
+                <h1 class="info-label">Correct:</h1>
+                <h1 class="info-value">{{ totalCorrectAnswer }}</h1>
+            </div>
+            <div class="row">
+                <h1 class="info-label">Score:</h1>
+                <h1 class="info-value">{{ score }}</h1>
+            </div>
         </div>
     </div>
 </template>
@@ -170,9 +185,9 @@ watch(tries, () => {
 }
 
 .word-container div {
-    @apply flex gap-3 text-xl items-center font-semibold;
+    @apply flex gap-1 text-xl items-center font-semibold;
 
-    @apply md:text-2xl;
+    @apply md:text-2xl md:gap-3;
 }
 
 .word-container div h1 {
@@ -231,7 +246,13 @@ watch(tries, () => {
     @apply !text-red
 }
 
-.score {
-    @apply text-lg
+.info-container {
+    @apply w-full;
+
+    @apply lg:w-1/3;
+}
+
+.row {
+    @apply w-full flex justify-between;
 }
 </style>
