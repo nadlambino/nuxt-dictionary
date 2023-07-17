@@ -28,7 +28,7 @@ export default {
             const locale = fileName.split('-').pop() || ''
 
             if (this.locales.includes(locale.toLowerCase()) && !_.isNil(fileName)) {
-                return locale;
+                return locale.toUpperCase();
             }
 
             return null;

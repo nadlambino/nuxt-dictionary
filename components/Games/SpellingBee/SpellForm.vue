@@ -10,11 +10,14 @@ const answer = ref(null)
 const timeout = ref()
 const tries = ref(3)
 const preAnswer = ref(null)
+const score = ref(0)
+const totalCorrectAnswer = ref(0)
+const answerInput = ref(null)
 
 const phonetics = computed(() => {
     return result.value.map(r => {
         return r.phonetics
-    }).filter(p => p.audio !== '')[0];
+    })[0]?.filter(p => p.audio !== '');
 })
 
 const generateWord = () => {
@@ -29,6 +32,10 @@ const isCorrect = computed(() => {
     return word.value?.trim().toLowerCase() === answer.value?.trim().toLowerCase();
 })
 
+const level = computed(() => {
+    return Math.floor((totalCorrectAnswer.value / 10)) + 1
+})
+
 const submit = () => {
     if (tries.value <= 0 || isCorrect.value || !word.value || result.value.length === 0 || phonetics.value?.length === 0) {
         return
@@ -36,8 +43,13 @@ const submit = () => {
 
     answer.value = preAnswer.value
     if (answer.value === word.value) {
+        score.value += word.value.length
+        totalCorrectAnswer.value += 1
         clearTimeout(timeout.value)
-        timeout.value = setTimeout(generateWord, 3000)
+        timeout.value = setTimeout(generateWord, 200)
+        if (answerInput.value) {
+            answerInput.value.focus()
+        }
     } else {
         tries.value -= 1;
     }
@@ -56,41 +68,53 @@ watch(phonetics, () => {
 </script>
 
 <template>
-    <div class="form-container">
-        <div class="question-container">
-            <div class="word-container">
-                <div v-if="result.length === 0 || phonetics?.length === 0">Generating a word . . .</div>
-                <div v-else>
-                    <h1>
-                        Spell the word
-                        <span class="word error" v-if="tries <= 0">{{ word }}</span>
-                        <span class="word" v-else-if="isCorrect">{{ word }}</span>
-                        <span v-else :class="{error: answer && !isCorrect}">. . .</span>
-                    </h1>
-                    <CustomAudio v-for="(phonetic, i) in phonetics" :key="i" :source="phonetic.audio" />
+    <div class="game-wrapper">
+        <div class="form-container">
+            <div class="question-container">
+                <div class="word-container">
+                    <div v-if="result.length === 0 || phonetics?.length === 0">Generating a word . . .</div>
+                    <div v-else>
+                        <h1>
+                            Spell the word
+                            <span class="word error" v-if="tries <= 0">{{ word }}</span>
+                            <span class="word" v-else-if="isCorrect">{{ word }}</span>
+                            <span v-else :class="{error: answer && !isCorrect}">. . .</span>
+                        </h1>
+                        <CustomAudio v-for="(phonetic, i) in phonetics" :key="i" :source="phonetic.audio" />
+                    </div>
+                </div>
+                <button class="new-btn" @click="generateWord">SKIP</button>
+            </div>
+            <div class="answer-container">
+                <label>Tries Left: <span class="tries" :class="{danger: tries <= 0, warning: tries === 1}">{{ tries }}</span></label>
+                <div class="answer">
+                    <form @submit.prevent="submit">
+                        <input
+                            ref="answerInput"
+                            v-model.trim="preAnswer"
+                            type="text"
+                            autofocus
+                            class="answer-textbox"
+                        />
+                        <button class="answer-btn" :disabled="isCorrect || tries <= 0">SUBMIT</button>
+                    </form>
                 </div>
             </div>
-            <button class="new-btn" @click="generateWord">SKIP</button>
         </div>
-        <div class="answer-container">
-            <label>Tries Left: <span class="tries" :class="{danger: tries <= 0, warning: tries === 1}">{{ tries }}</span></label>
-            <div class="answer">
-                <form @submit.prevent="submit">
-                    <input
-                        v-model.trim="preAnswer"
-                        type="text"
-                        autofocus
-                        class="answer-textbox"
-                        :disabled="isCorrect || tries <= 0"
-                    />
-                    <button class="answer-btn" :disabled="isCorrect || tries <= 0">SUBMIT</button>
-                </form>
-            </div>
+        <div class="info-container">
+            <h1 class="score">Score: {{ score }}</h1>
+            <h1 class="score">Level: {{ level }}</h1>
+            <h1 class="score">Total Correct Answers: {{ totalCorrectAnswer }}</h1>
         </div>
     </div>
 </template>
 
 <style scoped>
+.game-wrapper {
+    @apply flex flex-col gap-5;
+
+    @apply lg:flex-row;
+}
 .form-container {
     @apply flex flex-col w-full gap-5;
 
@@ -161,5 +185,9 @@ watch(phonetics, () => {
 
 .error {
     @apply !text-red
+}
+
+.score {
+    @apply text-lg
 }
 </style>
