@@ -16,6 +16,7 @@ const answerInput = ref(null)
 const maxLevel = 5
 const apiTries = ref(0)
 const audioElement = ref(null)
+const words = ref([])
 
 const phonetics = computed(() => {
     return result.value.map(r => {
@@ -28,7 +29,13 @@ const generateWord = () => {
     preAnswer.value = null
     answer.value = null
     result.value = [];
-    word.value = generate({minLength: min.value, maxLength: max.value});
+    const generatedWord = generate({minLength: min.value, maxLength: max.value});
+    if (words.value?.includes(generatedWord)) {
+        return generateWord();
+    }
+
+    words.value?.push(generatedWord)
+    word.value = generatedWord;
 }
 
 const computeMin = () => {
@@ -266,12 +273,12 @@ watch(tries, () => {
 }
 
 .info-container {
-    @apply w-full;
+    @apply w-full flex flex-col gap-3;
 
     @apply lg:w-1/3;
 }
 
 .row {
-    @apply w-full flex justify-between;
+    @apply w-full flex justify-between text-2xl;
 }
 </style>
