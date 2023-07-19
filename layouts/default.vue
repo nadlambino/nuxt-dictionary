@@ -40,6 +40,14 @@ export default defineComponent({
                     type: 'image/png',
                     href: favicon
                 }
+            ],
+            meta: [
+                {name: 'description', content: 'A free dictionary app with games related to words and phonetics'},
+                {name: 'robots', content: 'index, follow'},
+                {name: 'keywords', content: 'dictionary, free dictionary, dictionary game, games'},
+                {name: 'og:title', content: 'Free Dictionary'},
+                {name: 'og:description', content: 'A free dictionary app with games related to words and phonetics'},
+                {name: 'og:url', content: 'https://dictionary-nadlambino.netlify.app'},
             ]
         });
 
